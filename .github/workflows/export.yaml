@@ -1,0 +1,34 @@
+name: Application
+
+on:
+    push: ~
+    pull_request: ~
+
+jobs:
+    export:
+
+        runs-on: ubuntu-latest
+
+        name: "Export"
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Export
+              run: npm run export
+
+            -
+                name: Upload export on Artifact
+                uses: actions/upload-artifact@v3
+                if: always()
+                with:
+                    name: "Export"
+                    path: ./slides-export.pdf
+                    if-no-files-found: ignore
