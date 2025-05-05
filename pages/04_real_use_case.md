@@ -82,9 +82,12 @@ final class DriverGrid extends AbstractGrid
 
 ---
 layout: center
+class: bg-black text-white
 ---
 
 Starting slowly
+
+<img src="/formation_lap.gif">
 
 ---
 
@@ -165,6 +168,16 @@ layout: image
 image: '/fixed_data.png'
 backgroundSize: contain
 ---
+
+---
+layout: center
+class: bg-black text-white
+---
+
+Now, let's use real data from the API!
+
+<img src="/starting_grid.gif">
+
 
 ---
 transition: fade

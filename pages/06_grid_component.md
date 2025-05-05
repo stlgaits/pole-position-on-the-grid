@@ -2,13 +2,22 @@
 layout: center
 ---
 
-# New Grid Live Component (Experimental)
+## Push, Push, Push!
+
+<img src="/push_lewis.gif" class="w-120">
 
 ---
+layout: center
+---
 
-TODO
+# 🧟 New Grid Live Component
 
-- talk about a new Grid component using Symfony UX Live Component
+it's alive...
+
+---
+layout: image
+image: /pit_stop.gif
+---
 
 ---
 layout: two-cols

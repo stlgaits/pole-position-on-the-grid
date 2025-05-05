@@ -2,6 +2,14 @@
 layout: center
 ---
 
+
 # Conclusion
 
-TODO
+---
+layout: center
+class: bg-black text-white
+---
+
+Congratulations!
+
+<img src="/podium.gif">

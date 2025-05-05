@@ -27,17 +27,14 @@ css: unocss
 hideInToc: true
 ---
 
-# Pole position on the grid
+# 🏎️ Pole position on the grid 🏁
+
 
 with Sylius Grid
 
 <div align="center">
 <img class="w-75" align="center" src="https://sylius.com/wp-content/uploads/2021/03/sylius-logo_sylius-logo-light-1024x422.jpg">
 </div>
-
-<!--
-Let's talk about the Resource revolution on the new Sylius and Grid based on API Platform internals.
--->
 
 ---
 src: ./pages/01_index.md
