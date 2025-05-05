@@ -52,21 +52,17 @@ src: ./pages/03_history.md
 ---
 
 ---
-src: ./pages/04_sylius_grid.md
+src: ./pages/04_real_use_case.md
 ---
 
 ---
-src: ./pages/05_real_use_case.md
+src: ./pages/05_new_attributes.md
 ---
 
 ---
-src: ./pages/06_new_attributes.md
+src: ./pages/06_grid_component.md
 ---
 
 ---
-src: ./pages/07_grid_component.md
----
-
----
-src: ./pages/08_conclusion.md
+src: ./pages/07_conclusion.md
 ---
