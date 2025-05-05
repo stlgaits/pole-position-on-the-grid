@@ -39,13 +39,19 @@ final readonly class DriverResource implements ResourceInterface
 
 ---
 
-Create a Driver grid
+## Create a Driver grid
+
+<v-clicks>
+
+💡 <em>Creating a grid from non-Doctrine entity is sth new.</em>
 
 ```shell
 symfony console make:grid 'App\Resource\DriverResource'
 ```
 
-💡 <em>Creating a grid from non-Doctrine entity is sth new.</em>
+<img src="/new_make_grid.png" class="w-150"/>
+
+</v-clicks>
 
 ---
 
@@ -73,6 +79,12 @@ final class DriverGrid extends AbstractGrid
     }
 }
 ```
+
+---
+layout: center
+---
+
+Starting slowly
 
 ---
 
@@ -158,7 +170,7 @@ backgroundSize: contain
 transition: fade
 ---
 
-```php {all|14,9|17-20|22-25}
+```php {all|14,9|17-20}
 namespace App\Grid\Provider;
 
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -169,10 +181,10 @@ use Sylius\Component\Grid\Definition\Grid;
 use Sylius\Component\Grid\Parameters;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class DriverApiGridProvider implements DataProviderInterface
+final readonly class DriverGridProvider implements DataProviderInterface
 {
     public function __construct(
-        private HttpClientInterface $openF1Client
+        private HttpClientInterface $openF1Client,
     ) {}
 
     public function getData(Grid $grid, Parameters $parameters): PagerFantaInterface
@@ -202,7 +214,7 @@ use Sylius\Component\Grid\Definition\Grid;
 use Sylius\Component\Grid\Parameters;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class DriverApiGridProvider implements DataProviderInterface
+final readonly class DriverGridProvider implements DataProviderInterface
 {
     public function __construct(
         private HttpClientInterface $openF1Client
@@ -225,7 +237,7 @@ namespace App\Grid\Provider;
 use Sylius\Component\Grid\Data\DataProviderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class DriverApiGridProvider implements DataProviderInterface
+final readonly class DriverGridProvider implements DataProviderInterface
 {
     public function __construct(
         private HttpClientInterface $openF1Client
@@ -258,12 +270,6 @@ backgroundSize: contain
 ---
 
 ---
-
-TODO
-* Create a team radio grid
-* Add a link to team radio list from a specific driver
-
----
 layout: center
 ---
 
@@ -273,7 +279,7 @@ using the brand new #[AsFilter] attribute
 
 ---
 
-```php {all|8,3|9,6|10|12-18}
+```php {all|8,3|9,6|10|12-18,5}
 namespace App\Grid\Filter;
 
 use Sylius\Component\Grid\Attribute\AsFilter;
@@ -328,6 +334,8 @@ final class DriverGrid extends AbstractGrid
 ```
 
 ---
+transition: fade
+---
 
 ```php {6,14|16}
 namespace App\Grid\Provider;
@@ -335,10 +343,10 @@ namespace App\Grid\Provider;
 use Sylius\Component\Grid\Data\DataProviderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class DriverApiGridProvider implements DataProviderInterface
+final readonly class DriverGridProvider implements DataProviderInterface
 {
     public function __construct(
-        private HttpClientInterface $openF1Client
+        private HttpClientInterface $openF1Client,
     ) {}
 
     // ...
@@ -417,5 +425,93 @@ backgroundSize: contain
 ---
 layout: image
 image: '/country_filter_results.png'
+backgroundSize: contain
+---
+
+---
+layout: center
+---
+
+Add a link to another grid with filtered data
+
+---
+layout: image
+image: '/team_radio.png'
+backgroundSize: contain
+---
+
+---
+
+```php
+namespace App\Grid;
+
+use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
+use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Component\Grid\Attribute\AsGrid;
+
+#[AsGrid]
+final class TeamRadioGrid extends AbstractGrid
+{
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            // ...
+            ->addFilter(
+                StringFilter::create(name: 'driver_number', type: 'equal')
+                    ->setLabel('app.ui.driver_number')
+            )
+            // ...
+        ;
+    }
+}
+```
+
+---
+
+```php {all|11,2|12,1|13-24}
+use Sylius\Bundle\GridBundle\Builder\Action\Action;
+use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
+
+#[AsGrid]
+final class DriverGrid extends AbstractGrid
+{
+    public function buildGrid(GridBuilderInterface $gridBuilder): void
+    {
+        $gridBuilder
+            ->addActionGroup(
+                ItemActionGroup::create(
+                    Action::create('team_radios', 'show')
+                        ->setOptions([
+                            'link' => [
+                                'route' => 'app_admin_team_radio_index',
+                                'parameters' => [
+                                    'criteria' => [
+                                        'driver_number' => [
+                                            'value' => 'resource.number', // driverResource->number
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ])
+                        ->setLabel('app.ui.show_team_radios')
+                        ->setIcon('tabler:radio'),
+                )
+            )
+        ;
+    }
+}
+```
+
+---
+transition: fade
+layout: image
+image: '/driver_with_linked_action.png'
+backgroundSize: contain
+---
+
+---
+layout: image
+image: '/filtered_team_radio.png'
 backgroundSize: contain
 ---

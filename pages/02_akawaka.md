@@ -1,6 +1,7 @@
 ---
 layout: image-right
-image: /akawaka.png
+image: /akawaka.svg
+backgroundSize: contain
 ---
 
 # Akawaka
