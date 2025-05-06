@@ -141,3 +141,8 @@ final class DummyFilter implements FilterInterface
     // ..
 }
 ```
+
+---
+
+TODO
+Talk about specifying the custom data provider on the AsGrid attribute.
