@@ -1,9 +1,4 @@
 # Sylius Grid Technical History
-
-Back in 2016 - Grids
-
-<img class="w-150" src="/new_grids.png"/>
-
 ---
 layout: quote
 ---
