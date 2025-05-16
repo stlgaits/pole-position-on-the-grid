@@ -29,8 +29,7 @@ hideInToc: true
 
 # 🏎️ Pole position on the grid 🏁
 
-
-with Sylius Grid
+Awesome new Sylius Grid features to put you in the driver’s seat
 
 <div align="center">
 <img class="w-75" align="center" src="https://sylius.com/wp-content/uploads/2021/03/sylius-logo_sylius-logo-light-1024x422.jpg">
@@ -45,7 +44,7 @@ src: ./pages/02_akawaka.md
 ---
 
 ---
-src: ./pages/03_history.md
+src: ./pages/03_stack.md
 ---
 
 ---
@@ -62,4 +61,8 @@ src: ./pages/06_grid_component.md
 
 ---
 src: ./pages/07_conclusion.md
+---
+
+---
+src: ./pages/08_references.md
 ---

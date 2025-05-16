@@ -1,10 +1,19 @@
 ---
-layout: center
+layout: image-right
+image: /toto_wolff.jpg
+backgroundSize: contain
 ---
 
-# Real use case
+# What if... you were Toto Wolff?
 
-Let's create an admin panel with data provided by an external API
+Let's create a Formula 1 admin panel using :
+
+* the [OpenF1](https://openf1.org/) API
+* the Sylius Stack
+    * boosted `make:grid` command
+    * new Sylius Grid Attributes
+        * #[AsGrid]
+        * #[AsFilter]
 
 ---
 
@@ -34,7 +43,6 @@ final readonly class DriverResource implements ResourceInterface
         return $this->number;
     }
 }
-
 ```
 
 ---
@@ -43,7 +51,7 @@ final readonly class DriverResource implements ResourceInterface
 
 <v-clicks>
 
-💡 <em>Creating a grid from non-Doctrine entity is sth new.</em>
+💡 <em>Now you can also create a grid based on a non-Doctrine entity, including... Sylius Resources !</em>
 
 ```shell
 symfony console make:grid 'App\Resource\DriverResource'
@@ -80,6 +88,79 @@ final class DriverGrid extends AbstractGrid
 }
 ```
 
+
+---
+layout: center
+---
+
+𝄜 The brand new #[AsGrid] attribute
+
+---
+layout: two-cols
+---
+
+Before
+
+```php
+use App\Entity\Dummy;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
+
+final class DummyGrid extends AbstractGrid 
+implements ResourceAwareGridInterface
+{
+    public function buildGrid(
+        GridBuilderInterface $gridBuilder,
+    ): void {
+        // ...
+    }
+    
+    public function getResourceClass(): string
+    {
+        return Dummy::class;
+    } 
+}
+```
+
+::right::
+
+After
+
+```php
+use App\Entity\Dummy;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+
+#[AsGrid(resourceClass: Dummy::class)]
+final class DummyGrid extends AbstractGrid
+{
+    public function __invoke(
+        GridBuilderInterface $gridBuilder,
+    ): void 
+        // ...
+    }
+}
+```
+
+---
+layout: center
+---
+
+```php{all|2,4,7}
+use App\Entity\Dummy;
+use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
+
+#[AsGrid(resourceClass: Dummy::class)]
+final class DummyGrid extends AbstractGrid
+{
+    public function __invoke(
+        GridBuilderInterface $gridBuilder,
+    ): void 
+        // ...
+    }
+}
+```
+
+
 ---
 layout: center
 class: bg-black text-white
@@ -91,9 +172,9 @@ Starting slowly
 
 ---
 
-Create a Driver grid provider
+Create a driver 🏎️ Grid Provider
 
-```php {all|10|6,10|12|12,5|14-15}
+```php
 namespace App\Grid;
 
 use Pagerfanta\Adapter\FixedAdapter;
@@ -286,12 +367,97 @@ backgroundSize: contain
 layout: center
 ---
 
-## 🔎 Adding a filter
+## 🔎 Filter for specific drivers
 
 using the brand new #[AsFilter] attribute
 
 ---
+transition: fade
+---
 
+Before
+
+```php {all|5,2|5,2,12,17}
+use Sylius\Component\Grid\Data\DataSourceInterface;
+use Sylius\Component\Grid\Filtering\ConfigurableFilterInterface;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+
+final class CountryFilter implements ConfigurableFilterInterface
+{
+    public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
+    {
+        // TODO: Implement apply() method.
+    }
+    
+    public static function getType(): string
+    {
+        return self::class;
+    }
+    
+    public static function getFormType(): string
+    {
+        return CountryType::class;
+    }
+}
+```
+
+---
+
+After
+
+```php {1,6,7,3}
+use Sylius\Component\Grid\Attribute\AsFilter;
+use Sylius\Component\Grid\Data\DataSourceInterface;
+use Sylius\Component\Grid\Filtering\FilterInterface;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+
+#[AsFilter(formType: CountryType::class)]
+final class CountryFilter implements FilterInterface
+{
+    public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
+    {
+        // TODO: Implement apply() method.
+    }
+}
+```
+
+---
+layout: two-cols
+---
+
+Before
+
+```yaml
+## config/packages/sylius_grid.yaml
+sylius_grid:
+  filter:
+    dummy: 'path/to/dummy/filter/template'
+```
+
+::right::
+
+After
+
+```php
+use Sylius\Component\Grid\Attribute\AsFilter;
+use Sylius\Component\Grid\Filtering\FilterInterface;
+
+#[AsFilter(
+    template: 'path/to/dummy/filter/template',
+)]
+final class DummyFilter implements FilterInterface
+{
+    // ..
+}
+```
+
+
+---
+transition: fade
+---
+
+
+## #[AsFilter]
 ```php {all|8,3|9,6|10|12-18,5}
 namespace App\Grid\Filter;
 
@@ -314,6 +480,8 @@ final class CountryFilter implements FilterInterface
 ```
 
 ---
+
+## Insert the filter into our Grid
 
 ```php {all|16|17,3|18-21}
 namespace App\Grid;
@@ -349,6 +517,8 @@ final class DriverGrid extends AbstractGrid
 ---
 transition: fade
 ---
+
+## Actual filtering logic inside the provider
 
 ```php {6,14|16}
 namespace App\Grid\Provider;
@@ -482,6 +652,9 @@ final class TeamRadioGrid extends AbstractGrid
 
 ---
 
+
+## Actions : links with filter params
+
 ```php {all|11,2|12,1|13-24}
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
 use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
@@ -522,6 +695,16 @@ layout: image
 image: '/driver_with_linked_action.png'
 backgroundSize: contain
 ---
+
+<div class="relative w-full">
+  <img src="/driver_with_linked_action.png" class="w-full" />
+
+  <div
+    class="absolute border-4 border-red-500 rounded-full w-16 h-32"
+    style="top: 35%; left: 91%;"
+    v-click
+  ></div>
+</div>
 
 ---
 layout: image

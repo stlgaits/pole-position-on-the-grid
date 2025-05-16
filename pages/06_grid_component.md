@@ -8,6 +8,8 @@ layout: center
 
 ---
 layout: center
+name: mystery-slide
+title: Mystery surprise 👀
 ---
 
 # 🧟 New Grid Live Component

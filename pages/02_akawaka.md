@@ -1,21 +1,42 @@
 ---
 layout: image-right
-image: /akawaka.svg
+image: /sylius_akawaka.png
 backgroundSize: contain
 ---
 
-# Akawaka
-
-## Experts for your web projects & Sylius partner
-
-We help you design and improve your projects:
+# Akawaka & Sylius
+# a true 💖 story
 
 <v-clicks>
 
-*    We use clean architecture techniques via DDD methodologies for projects that stand the test of time,
+*  Sylius Partner since 2022
+* 4 amazing Sylius Key Contributors :
+    * Loïc Frémont
+    * Valentin Silvestre
+    * Florent Merle
+    * Estelle Gaits
+  
+</v-clicks>
 
-*    A true quality approach through testing,
 
-*    On a contract or fixed-price basis, to create and/or integrate teams and work in complete collaboration.
+---
+layout: image-right
+
+backgroundSize: contain
+class: bg-black text-white
+image: /logo-akawaka-couleur.jpg
+---
+
+## Symfony & Sylius experts for your business-critical web projects
+
+We help you build, scale and improve your applications with:
+
+<v-clicks>
+
+*    robust architectures built on **DDD** principles – for software that stand the test of time
+
+*    strong quality culture through systematic **testing** and continuous improvement
+
+*    flexible engagement models – fixed-price or time-based, solo or embedded in your team
 
 </v-clicks>
