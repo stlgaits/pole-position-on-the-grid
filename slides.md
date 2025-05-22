@@ -59,10 +59,15 @@ src: ./pages/05_new_attributes.md
 src: ./pages/06_grid_component.md
 ---
 
+
 ---
-src: ./pages/07_conclusion.md
+src: ./pages/07_assessment.md
 ---
 
 ---
-src: ./pages/08_references.md
+src: ./pages/08_conclusion.md
+---
+
+---
+src: ./pages/09_references.md
 ---

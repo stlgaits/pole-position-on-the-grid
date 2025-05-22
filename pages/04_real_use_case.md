@@ -220,35 +220,6 @@ image: '/empty_data.png'
 backgroundSize: contain
 ---
 
----
-
-```php {all|7-8|11-17}
-// ...
-
-final readonly class DriverGridProvider implements DataProviderInterface
-{
-    public function getData(Grid $grid, Parameters $parameters): PagerFantaInterface
-    {
-        // start with a fixed data paginator
-        return new Pagerfanta(new FixedAdapter(4, $this->getDrivers()));
-    }
-
-    private function getDrivers(): iterable
-    {
-        yield new DriverResource(number: 1, firstName: 'Max', lastName: 'Verstappen', countryCode: 'NED', teamName: 'Red Bull Racing', image: 'https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/1col/image.png');
-        yield new DriverResource(number: 2, firstName: 'Logan', lastName: 'Sargeant', countryCode: 'USA', teamName: 'Williams', image: 'https://www.formula1.com/content/dam/fom-website/drivers/L/LOGSAR01_Logan_Sargeant/logsar01.png.transform/1col/image.png');
-        yield new DriverResource(number: 4, firstName: 'Lando', lastName: 'Norris', countryCode: 'GBR', teamName: 'McLaren', image: 'https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/1col/image.png');
-        yield new DriverResource(number: 44, firstName: 'Lewis', lastName: 'Hamilton', countryCode: 'GBR', teamName: 'Mercedes', image: 'https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/1col/image.png');
-    }
-}
-```
-
-
----
-layout: image
-image: '/fixed_data.png'
-backgroundSize: contain
----
 
 ---
 layout: center
@@ -615,45 +586,12 @@ backgroundSize: contain
 layout: center
 ---
 
-Add a link to another grid with filtered data
-
----
-layout: image
-image: '/team_radio.png'
-backgroundSize: contain
----
+# Add a link to another grid with filtered data
+Toto Wolff needs to listen in on Lewis Hamilton's team radio 📻
 
 ---
 
-```php
-namespace App\Grid;
-
-use Sylius\Bundle\GridBundle\Builder\Filter\StringFilter;
-use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Component\Grid\Attribute\AsGrid;
-
-#[AsGrid]
-final class TeamRadioGrid extends AbstractGrid
-{
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
-    {
-        $gridBuilder
-            // ...
-            ->addFilter(
-                StringFilter::create(name: 'driver_number', type: 'equal')
-                    ->setLabel('app.ui.driver_number')
-            )
-            // ...
-        ;
-    }
-}
-```
-
----
-
-
-## Actions : links with filter params
+## Actions: links with filter params
 
 ```php {all|11,2|12,1|13-24}
 use Sylius\Bundle\GridBundle\Builder\Action\Action;
@@ -692,7 +630,6 @@ final class DriverGrid extends AbstractGrid
 ---
 transition: fade
 layout: image
-image: '/driver_with_linked_action.png'
 backgroundSize: contain
 ---
 
