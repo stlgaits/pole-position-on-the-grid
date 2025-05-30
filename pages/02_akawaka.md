@@ -13,7 +13,7 @@ backgroundSize: contain
 * 4 amazing Sylius Key Contributors :
     * Loïc Frémont
     * Valentin Silvestre
-    * Florent Merle
+    * Florian Merle
     * Estelle Gaits
   
 </v-clicks>

@@ -148,17 +148,3 @@ final readonly class TeamResource implements ResourceInterface
 -->
 ---
 
-
-What's wrong with this code?
-
-
-```php
-    use Sylius\Component\Grid\Filtering\ConfigurableFilterInterface;
-
-    #[AsFilter(formType: TeamFilterType::class,  template: FilterTemplate::SELECT->value,)]
-    final class TeamFilter implements ConfigurableFilterInterface {
-```
-
-<!--
-    @TODO replace this question with something more pertinent and interesting than just the wrong interface is implemented...
--->
