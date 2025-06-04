@@ -234,7 +234,7 @@ Now, let's use real data from the API!
 transition: fade
 ---
 
-```php {all|14,9|17-20}
+```php
 namespace App\Grid\Provider;
 
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -264,38 +264,8 @@ final readonly class DriverGridProvider implements DataProviderInterface
 ```
 
 ---
-transition: fade
----
 
-```php {19-22}
-namespace App\Grid\Provider;
-
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\PagerfantaInterface;
-use Sylius\Component\Grid\Data\DataProviderInterface;
-use Sylius\Component\Grid\Definition\Grid;
-use Sylius\Component\Grid\Parameters;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
-final readonly class DriverGridProvider implements DataProviderInterface
-{
-    public function __construct(
-        private HttpClientInterface $openF1Client
-    ) {}
-
-    // ...
-
-    private function getDrivers(): iterable
-    {
-        // ...
-    }
-}
-```
-
----
-
-```php {14|16|18-27}
+```php {all|16|18-27}
 namespace App\Grid\Provider;
 
 use Sylius\Component\Grid\Data\DataProviderInterface;
@@ -401,7 +371,7 @@ Before
 ## config/packages/sylius_grid.yaml
 sylius_grid:
   filter:
-    dummy: 'path/to/dummy/filter/template'
+    dummy: 'path/to/dummy/filter/template.html.twig'
 ```
 
 ::right::
@@ -413,7 +383,7 @@ use Sylius\Component\Grid\Attribute\AsFilter;
 use Sylius\Component\Grid\Filtering\FilterInterface;
 
 #[AsFilter(
-    template: 'path/to/dummy/filter/template',
+    template: 'path/to/dummy/filter/template.html.twig',
 )]
 final class DummyFilter implements FilterInterface
 {
@@ -428,7 +398,7 @@ transition: fade
 
 
 ## #[AsFilter]
-```php {all|8,3|9,6|10|12-18,5}
+```php {all|8,3|9,6|10|12-18,5|all}
 namespace App\Grid\Filter;
 
 use Sylius\Component\Grid\Attribute\AsFilter;
@@ -453,22 +423,13 @@ final class CountryFilter implements FilterInterface
 
 ## Insert the filter into our Grid
 
-```php {all|16|17,3|18-21}
-namespace App\Grid;
-
-use App\Grid\Filter\CountryFilter;
-use Sylius\Bundle\GridBundle\Builder\Filter\Filter;
-use Sylius\Bundle\GridBundle\Builder\GridBuilderInterface;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Component\Grid\Attribute\AsGrid;
-
+```php {all|7,14|8-12|all}
 #[AsGrid]
 final class DriverGrid extends AbstractGrid
 {
     public function buildGrid(GridBuilderInterface $gridBuilder): void
     {
         $gridBuilder
-            // ...
             ->addFilter(
                 Filter::create('country', CountryFilter::class)
                     ->setFormOptions([
@@ -490,56 +451,10 @@ transition: fade
 
 ## Actual filtering logic inside the provider
 
-```php {6,14|16}
-namespace App\Grid\Provider;
-
-use Sylius\Component\Grid\Data\DataProviderInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-
-final readonly class DriverGridProvider implements DataProviderInterface
-{
-    public function __construct(
-        private HttpClientInterface $openF1Client,
-    ) {}
-
-    // ...
-
-    private function getDrivers(): iterable
-    {
-        $responseData = $this->openF1Client->request('GET', '/v1/drivers?session_key=9158')->toArray();
-
-        foreach ($responseData as $row) {
-            yield new DriverResource(
-                number: $row['driver_number'],
-                firstName: $row['first_name'],
-                lastName: $row['last_name'],
-                countryCode: $row['country_code'],
-                teamName: $row['team_name'],
-                image: $row['headshot_url'],
-            );
-        }
-    }
-}
-```
-
----
-
-```php {12,17|20-23|26}
-namespace App\Grid\Provider;
-//...
-
+```php {all|9-11|14|26|all}
 final readonly class DriverApiGridProvider implements DataProviderInterface
 {
     // ...
-
-    public function getData(Grid $grid, Parameters $parameters): PagerFantaInterface
-    {
-        return new Pagerfanta(
-            new ArrayAdapter(iterator_to_array(
-                $this->getDrivers($parameters->get('criteria')),
-            ))
-        );
-    }
 
     private function getDrivers(array $criteria): iterable
     {
@@ -557,11 +472,7 @@ final readonly class DriverApiGridProvider implements DataProviderInterface
         foreach ($responseData as $row) {
             yield new DriverResource(
                 number: $row['driver_number'],
-                firstName: $row['first_name'],
-                lastName: $row['last_name'],
-                countryCode: $row['country_code'],
-                teamName: $row['team_name'],
-                image: $row['headshot_url'],
+                // ...
             );
         }
     }
@@ -583,67 +494,4 @@ backgroundSize: contain
 
 ---
 layout: center
----
-
-# Add a link to another grid with filtered data
-Toto Wolff needs to listen in on Lewis Hamilton's team radio 📻
-
----
-
-## Actions: links with filter params
-
-```php {all|11,2|12,1|13-24}
-use Sylius\Bundle\GridBundle\Builder\Action\Action;
-use Sylius\Bundle\GridBundle\Builder\ActionGroup\ItemActionGroup;
-
-#[AsGrid]
-final class DriverGrid extends AbstractGrid
-{
-    public function buildGrid(GridBuilderInterface $gridBuilder): void
-    {
-        $gridBuilder
-            ->addActionGroup(
-                ItemActionGroup::create(
-                    Action::create('team_radios', 'show')
-                        ->setOptions([
-                            'link' => [
-                                'route' => 'app_admin_team_radio_index',
-                                'parameters' => [
-                                    'criteria' => [
-                                        'driver_number' => [
-                                            'value' => 'resource.number', // driverResource->number
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ])
-                        ->setLabel('app.ui.show_team_radios')
-                        ->setIcon('tabler:radio'),
-                )
-            )
-        ;
-    }
-}
-```
-
----
-transition: fade
-layout: image
-backgroundSize: contain
----
-
-<div class="relative w-full">
-  <img src="/driver_with_linked_action.png" class="w-full" />
-
-  <div
-    class="absolute border-4 border-red-500 rounded-full w-16 h-32"
-    style="top: 35%; left: 91%;"
-    v-click
-  ></div>
-</div>
-
----
-layout: image
-image: '/filtered_team_radio.png'
-backgroundSize: contain
 ---

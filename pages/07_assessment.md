@@ -14,22 +14,13 @@ Q1: How can you add a Team filter for the F1 drivers' grid?
 <v-clicks>
 
 * ```php
-    #[AsFilter(formType: TeamFilterType::class,  template: FilterTemplate::SELECT->value,)]
-    final class TeamFilter
+    #[AsFilter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
+    final class TeamFilter implements FilterInterface
 * ```php
-    use Sylius\Component\Grid\Filtering\ConfigurableFilterInterface;
-
-    final class TeamFilter implements ConfigurableFilterInterface {
-  
-    public static function getFormType(): string
-    {
-        return TeamFilterType::class;
-    }
-    // ...
+  #[AsGridFilter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
+  final class TeamFilter implements FilterInterface
 * ```php
-  use Sylius\Component\Grid\Filtering\FilterInterface;
-  
-  #[AsFilter(formType: TeamFilterType::class, template: FilterTemplate::SELECT->value,)]
+  #[Filter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
   final class TeamFilter implements FilterInterface
 
   
@@ -46,10 +37,10 @@ Q2: Find the odd one out.
 
 <v-clicks>
 
-* ```#[AsFilter()] ```
-* ```#[AsGrid()]```
-* <span v-mark="{ at: 5, color: 'red', type: 'circle' }">```#[AsProvider()]```</span>
-* ```#[AsResource()]```
+* ```#[AsFilter] ```
+* ```#[AsGrid]```
+* <span v-mark="{ at: 5, color: 'red', type: 'circle' }">```#[AsProvider]```</span>
+* ```#[AsResource]```
 
   
 </v-clicks>
@@ -67,40 +58,6 @@ final readonly class Team
         public string $name,
         public string|null $color = null,
     ) {
-    }
-}
-```
-
---- 
-
-Q3: ... and the 'hard-coded' data provider below. 
-
-```php
-final readonly class TeamGridProvider implements DataProviderInterface
-{
-    public function getData(Grid $grid, Parameters $parameters): PagerFantaInterface
-    {
-        $teams = iterator_to_array($this->getTeamsPaginator());
-
-        return new Pagerfanta(new ArrayAdapter($teams));
-    }
-
-    public function getTeamsPaginator(): iterable
-    {
-        $teams = [
-            ['name' =>'Ferrari', 'color' => 'F91536'],
-            ['name' =>'Mercedes', 'color' => '6CD3BF'],
-            ['name' =>'Red Bull Racing', 'color' => '3671C6'],
-            // ...
-        ];
-
-        foreach ($teams as $team) {
-            yield new Team(
-                id: $team['name'],
-                name: $team['name'],
-                color: $team['color'],
-            );
-        }
     }
 }
 ```

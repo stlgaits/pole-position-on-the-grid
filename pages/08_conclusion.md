@@ -1,14 +1,12 @@
 ---
 layout: center
----
-
-# Conclusion
-
----
-layout: center
 class: bg-black text-white
+title: Victory lap! 🏁
 ---
 
-Congratulations!
+## Congratulations!
 
 <img src="/podium.gif">
+
+
+

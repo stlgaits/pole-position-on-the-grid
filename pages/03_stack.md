@@ -11,7 +11,7 @@ image: /mercedes_sketch.png
 backgroundSize: contain
 ---
 
-# What's under the hood of the Sylius Stack ?
+# What's under the hood of the Sylius Stack?
 
 Create a lean & mean back-office in no time with :
 
