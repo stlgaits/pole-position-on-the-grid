@@ -52,13 +52,20 @@ src: ./pages/04_real_use_case.md
 ---
 
 ---
-src: ./pages/05_new_attributes.md
+src: ./pages/05_practice1_simple_grid.md
+---
+
+---
+src: ./pages/05_practice2_better_grid.md
+---
+
+---
+src: ./pages/05_practice3_filters.md
 ---
 
 ---
 src: ./pages/06_grid_component.md
 ---
-
 
 ---
 src: ./pages/07_assessment.md

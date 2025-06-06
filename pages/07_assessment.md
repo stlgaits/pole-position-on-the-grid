@@ -14,11 +14,15 @@ Q1: How can you add a Team filter for the F1 drivers' grid?
 <v-clicks>
 
 * ```php
-    #[AsFilter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
-    final class TeamFilter implements FilterInterface
+  #[AsFilter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
+  final class TeamFilter implements FilterInterface
+  
+
 * ```php
   #[AsGridFilter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
   final class TeamFilter implements FilterInterface
+  
+
 * ```php
   #[Filter(formType: TeamFilterType::class, template: '@SyliusBootstrapAdminUi/shared/grid/filter/select.html.twig',)]
   final class TeamFilter implements FilterInterface
@@ -103,5 +107,5 @@ final readonly class TeamResource implements ResourceInterface
 }
 ```
 -->
----
+
 

@@ -21,7 +21,7 @@ backgroundSize: contain
 <!--
 I was also a French & Spanish teacher and I had never written a single line of code yet. Happy days!
 The work I'm going to present today was built in collaboration with my incredible colleague and mentor Loïc Frémont, who
-unfortunately could not be here today but who's responsible for most of the ideas and implementations I'm going to show you today.
+unfortunately could not be here today but who's responsible for maintaining the Sylius Stack and most of the ideas and implementations I'm going to show you today.
 -->
 
 ---
