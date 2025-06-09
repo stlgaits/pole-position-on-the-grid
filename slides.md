@@ -64,11 +64,11 @@ src: ./pages/05_practice3_filters.md
 ---
 
 ---
-src: ./pages/06_grid_component.md
+src: ./pages/06_assessment.md
 ---
 
 ---
-src: ./pages/07_assessment.md
+src: ./pages/07_grid_component.md
 ---
 
 ---

@@ -2,90 +2,9 @@
 layout: center
 ---
 
-## 🔎 Filter for specific drivers
+## Practice 3 : 🔎 Filter for specific drivers
 
 using the brand new #[AsFilter] attribute
-
----
-transition: fade
----
-
-Before
-
-```php {all|5,2|5,2,12,17}
-use Sylius\Component\Grid\Data\DataSourceInterface;
-use Sylius\Component\Grid\Filtering\ConfigurableFilterInterface;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-
-final class CountryFilter implements ConfigurableFilterInterface
-{
-    public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
-    {
-        // TODO: Implement apply() method.
-    }
-    
-    public static function getType(): string
-    {
-        return self::class;
-    }
-    
-    public static function getFormType(): string
-    {
-        return CountryType::class;
-    }
-}
-```
-
----
-
-After
-
-```php {1,6,7,3}
-use Sylius\Component\Grid\Attribute\AsFilter;
-use Sylius\Component\Grid\Data\DataSourceInterface;
-use Sylius\Component\Grid\Filtering\FilterInterface;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-
-#[AsFilter(formType: CountryType::class)]
-final class CountryFilter implements FilterInterface
-{
-    public function apply(DataSourceInterface $dataSource, string $name, $data, array $options): void
-    {
-        // TODO: Implement apply() method.
-    }
-}
-```
-
----
-layout: two-cols
----
-
-Before
-
-```yaml
-## config/packages/sylius_grid.yaml
-sylius_grid:
-  filter:
-    dummy: 'path/to/dummy/filter/template.html.twig'
-```
-
-::right::
-
-After
-
-```php
-use Sylius\Component\Grid\Attribute\AsFilter;
-use Sylius\Component\Grid\Filtering\FilterInterface;
-
-#[AsFilter(
-    template: 'path/to/dummy/filter/template.html.twig',
-)]
-final class DummyFilter implements FilterInterface
-{
-    // ..
-}
-```
-
 
 ---
 transition: fade
@@ -186,3 +105,17 @@ layout: image
 image: '/country_filter_results.png'
 backgroundSize: contain
 ---
+
+---
+
+## [#AsFilter]
+
+
+<v-clicks>
+
+* formType 
+
+* template
+
+</v-clicks>
+

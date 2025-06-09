@@ -18,6 +18,7 @@ Let's create a Formula 1 admin panel using :
 ---
 layout: center
 class: bg-black text-white
+hideInToc: true
 ---
 
 # Starting slowly

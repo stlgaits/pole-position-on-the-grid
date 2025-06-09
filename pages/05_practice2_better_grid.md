@@ -1,45 +1,24 @@
 ---
 layout: center
+hideInToc: true
 ---
 
-𝄜 The brand new #[AsGrid] attribute
+# Practice 2: 𝄜 The brand new #[AsGrid] attribute
 
 ---
-layout: two-cols
+layout: center
 ---
 
-Before
-
-```php
-use App\Entity\Meeting;
-use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
-use Sylius\Bundle\GridBundle\Grid\ResourceAwareGridInterface;
-
-final class MeetingGrid extends AbstractGrid 
-implements ResourceAwareGridInterface
-{
-    public function buildGrid(
-        GridBuilderInterface $gridBuilder,
-    ): void {
-        // ...
-    }
-    
-    public function getResourceClass(): string
-    {
-        return Meeting::class;
-    } 
-}
-```
-
-::right::
-
-After
+## Resource class & provider arguments
 
 ```php
 use App\Entity\Meeting;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 
-#[AsGrid(resourceClass: Meeting::class)]
+#[AsGrid(
+    provider: MeetingGridProvider::class,
+    resourceClass: Meeting::class,   // any PHP model, including a Sylius resource
+)]
 final class MeetingGrid extends AbstractGrid
 {
     public function __invoke(
@@ -49,23 +28,29 @@ final class MeetingGrid extends AbstractGrid
     }
 }
 ```
-``
----
-layout: center
+
 ---
 
-```php{all|2,4,7}
+## build method and name arguments
+
+```php
 use App\Entity\Meeting;
 use Sylius\Bundle\GridBundle\Grid\AbstractGrid;
 
-#[AsGrid(resourceClass: Meeting::class)]
-final class MeetingDummyGrid extends AbstractGrid
+#[AsGrid(
+    buildMethod: 'customBuildMethod', 
+    name: 'meeting', // optional - FQCN by default
+    resourceClass: Meeting::class, // any PHP model, including a Sylius resource
+)]
+final class MeetingGrid extends AbstractGrid
 {
-    public function __invoke(
+    public function customBuildMethod(
         GridBuilderInterface $gridBuilder,
     ): void 
-        // ...
+            $gridBuilder->setProvider(MeetingGridProvider::class)
     }
+    
+  
 }
 ```
 
@@ -93,17 +78,25 @@ final class UserGrids
 }
 -->
 
+
 ---
 layout: center
 ---
 
 ## [#AsGrid]
 
+
 <v-clicks>
-* __invoke() instead of buildGrid() - _but buildGrid still supporte_
+
+* __invoke() instead of buildGrid() - but buildGrid still supported by default if no __invoke()
+
+* buildMethod argument to declare custom build method
+
+* provider argument instead of ->setProvider()
+
+* name argument (FQCN is used by default)
 
 </v-clicks>
-
 
 
 ---

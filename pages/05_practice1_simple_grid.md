@@ -1,11 +1,14 @@
 ---
 layout: center
+hideInToc: true
 ---
 
 # Practice 1: let's generate a simple grid view
 
 ![Simple Drivers Grid](/basic_driver_grid.png)
 
+---
+hideInToc: true
 ---
 
 # What do we need to generate an index grid?
@@ -163,5 +166,3 @@ image: '/grid_with_api.png'
 backgroundSize: contain
 ---
 
-
-## Practice 2!
