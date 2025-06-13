@@ -88,13 +88,13 @@ layout: center
 
 <v-clicks>
 
-* __invoke() instead of buildGrid() - but buildGrid still supported by default if no __invoke()
+* **__invoke()** instead of buildGrid() - but buildGrid still supported by default if no __invoke()
 
-* buildMethod argument to declare custom build method
+* **buildMethod** argument to declare custom build method
 
-* provider argument instead of ->setProvider()
+* **provider** argument instead of ->setProvider()
 
-* name argument (FQCN is used by default)
+* **name** argument (used by default) instead of getName()
 
 </v-clicks>
 

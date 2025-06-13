@@ -113,9 +113,9 @@ backgroundSize: contain
 
 <v-clicks>
 
-* formType 
+* **formType** argument instead of getFormType()
 
-* template
+* **template** argument instead of defining in config/packages/sylius_grid.php
 
 </v-clicks>
 
